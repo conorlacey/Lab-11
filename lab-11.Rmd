@@ -1,16 +1,16 @@
 ---
 title: "Lab 11 - Smoking during pregnancy"
-author: "Insert your name here"
-date: "Insert date here"
+author: "Conor Lacey"
+date: "03/27/2023"
 output: github_document
 ---
 
 ### Load packages and data
 
 ```{r load-packages, message=FALSE}
-library(tidyverse) 
-library(tidymodels)
-library(openintro)
+suppressWarnings(library(tidyverse)) 
+suppressWarnings(library(tidymodels))
+suppressWarnings(library(openintro))
 ```
 
 ### Exercise 1
