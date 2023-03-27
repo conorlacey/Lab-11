@@ -75,3 +75,10 @@ It also appears from the histograms that visits and weeks have some
 outliers.
 
 ### Exercise 2
+
+``` r
+ncbirths_white <- ncbirths %>% filter(whitemom == "white")
+mean(ncbirths_white$weight)
+```
+
+    ## [1] 7.250462
