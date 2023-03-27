@@ -9,19 +9,30 @@ output: github_document
 
 ```{r load-packages, message=FALSE}
 suppressWarnings(library(tidyverse)) 
-suppressWarnings(library(tidymodels))
 suppressWarnings(library(openintro))
+suppressWarnings(library(skimr))
+suppressWarnings(library(Hmisc))
+suppressWarnings(library(infer))
 ```
 
 ### Exercise 1
 
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+```{r ncbirths data}
+set.seed(4215)
+data("ncbirths")
+
+skim(ncbirths)
+
+ncbirths_num <- ncbirths %>% select_if(is.numeric)
+hist.data.frame(ncbirths_num)
+```
+
+Variables mature, premie, marital, lowbirthweight, gender, habit, and whitemom are categorical. 
+
+Variables fage, mage, weeks, visits, gained, and weight are numerical. 
+
+It also appears from the histograms that visits and weeks have some outliers.
 
 ### Exercise 2
 
-...
 
-Add exercise headings as needed.
