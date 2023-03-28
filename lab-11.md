@@ -159,3 +159,10 @@ ncbirths_habitgiven %>%
 H0: mu_weight_smoke = mu_weight\_!smoke
 
 H1: mu_weight_smoke ≠ mu_weight\_!smoke
+
+### Exercise 8
+
+Yes. We do not know the true population difference in birth weight of
+babies’ mothers who smoked and didn’t smoke. We do have a sample
+however, and can make an *inference* as to whether a difference exists
+in the population.
