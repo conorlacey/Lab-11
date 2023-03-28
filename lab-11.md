@@ -82,3 +82,13 @@ mean(ncbirths_white$weight)
 ```
 
     ## [1] 7.250462
+
+### Exercise 3
+
+I believe so. We are wanting to know whether the average weight of
+Caucasian babies has changed since 1995. However, we only have a sample
+of data, but we can use this sample to *infer* what is happening in the
+population. We can also resample from this multiple times and do a
+bootstap (a simulation) to make this inference.
+
+### Exercise 4
