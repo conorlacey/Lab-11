@@ -66,3 +66,15 @@ sum((df_weight$avg >= (7.43+(7.43-mean(ncbirths_white$weight)))) / length(df_wei
 For a two-tailed test we would get a p-value of 0.37. This is given by that the probability of getting a difference between the null and observed value in the negative direction is .183 and the probability of getting a difference between the null and observed value in the positive direction is .187.
 
 This p-value indicates that there has not been a significant change in the average birth weight of Caucasian babies since 1995.
+
+### Exercise 5
+
+```{r weight and habit}
+ncbirths %>% na.omit(cols = "habit") %>% ggplot(aes(y = weight, color = habit)) +
+  geom_boxplot()
+```
+
+Individuals who do not smoke tend to have more weight. 
+
+### Exercise 6 
+

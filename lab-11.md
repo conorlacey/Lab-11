@@ -126,3 +126,16 @@ direction is .187.
 
 This p-value indicates that there has not been a significant change in
 the average birth weight of Caucasian babies since 1995.
+
+### Exercise 5
+
+``` r
+ncbirths %>% na.omit(cols = "habit") %>% ggplot(aes(y = weight, color = habit)) +
+  geom_boxplot()
+```
+
+![](lab-11_files/figure-gfm/weight%20and%20habit-1.png)<!-- -->
+
+Individuals who do not smoke tend to have more weight.
+
+### Exercise 6
