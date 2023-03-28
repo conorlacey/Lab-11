@@ -136,6 +136,26 @@ ncbirths %>% na.omit(cols = "habit") %>% ggplot(aes(y = weight, color = habit)) 
 
 ![](lab-11_files/figure-gfm/weight%20and%20habit-1.png)<!-- -->
 
-Individuals who do not smoke tend to have more weight.
+Individuals whose mothers smoke tend to have lower birth weights.
 
 ### Exercise 6
+
+``` r
+ncbirths_habitgiven <- ncbirths %>% na.omit(cols = "habit")
+
+ncbirths_habitgiven %>%
+  group_by(habit) %>%
+  summarise(mean_weight = mean(weight))
+```
+
+    ## # A tibble: 2 × 2
+    ##   habit     mean_weight
+    ##   <fct>           <dbl>
+    ## 1 nonsmoker        7.25
+    ## 2 smoker           6.89
+
+### Exercise 7
+
+H0: mu_weight_smoke = mu_weight\_!smoke
+
+H1: mu_weight_smoke ≠ mu_weight\_!smoke

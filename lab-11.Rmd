@@ -74,7 +74,21 @@ ncbirths %>% na.omit(cols = "habit") %>% ggplot(aes(y = weight, color = habit)) 
   geom_boxplot()
 ```
 
-Individuals who do not smoke tend to have more weight. 
+Individuals whose mothers smoke tend to have lower birth weights.
 
 ### Exercise 6 
+```{r}
+ncbirths_habitgiven <- ncbirths %>% na.omit(cols = "habit")
 
+ncbirths_habitgiven %>%
+  group_by(habit) %>%
+  summarise(mean_weight = mean(weight))
+```
+
+### Exercise 7 
+
+H0: mu_weight_smoke = mu_weight_!smoke
+
+H1: mu_weight_smoke ≠ mu_weight_!smoke
+
+### Exercise 8
