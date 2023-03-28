@@ -91,4 +91,29 @@ of data, but we can use this sample to *infer* what is happening in the
 population. We can also resample from this multiple times and do a
 bootstap (a simulation) to make this inference.
 
-### Exercise 4
+``` r
+avg<-c(NA)
+for (i in 1:1000){
+x <- sample(ncbirths_white$weight, size = 50, replace = TRUE)
+avg[i]<-mean(x)
+}
+df_weight <- data.frame(avg = avg)
+df_weight <- df_weight %>% mutate(avg =(avg + (7.43-mean(ncbirths_white$weight))))
+
+df_weight %>% ggplot(aes(x = avg)) +
+  geom_histogram(color = "black",fill = "blue", alpha = 0.4) +
+  xlab("weight")
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](lab-11_files/figure-gfm/bootstrap-1.png)<!-- -->
+
+``` r
+sum((df_weight$avg >= (mean(ncbirths_white$weight))) / length(df_weight$avg)) 
+```
+
+    ## [1] 0.817
+
+.817 is the p-value of the proportion bootstrap samples that yielded a
+sample mean at least as extreme as the observed sample mean (7.25)
