@@ -110,10 +110,19 @@ df_weight %>% ggplot(aes(x = avg)) +
 ![](lab-11_files/figure-gfm/bootstrap-1.png)<!-- -->
 
 ``` r
-sum((df_weight$avg >= (mean(ncbirths_white$weight))) / length(df_weight$avg)) 
+sum((df_weight$avg <= (mean(ncbirths_white$weight))) / length(df_weight$avg)) +
+sum((df_weight$avg >= (7.43+(7.43-mean(ncbirths_white$weight)))) / length(df_weight$avg))
 ```
 
-    ## [1] 0.817
+    ## [1] 0.37
 
-.817 is the p-value of the proportion bootstrap samples that yielded a
-sample mean at least as extreme as the observed sample mean (7.25)
+### Exercise 4
+
+For a two-tailed test we would get a p-value of 0.37. This is given by
+that the probability of getting a difference between the null and
+observed value in the negative direction is .183 and the probability of
+getting a difference between the null and observed value in the positive
+direction is .187.
+
+This p-value indicates that there has not been a significant change in
+the average birth weight of Caucasian babies since 1995.
