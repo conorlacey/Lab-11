@@ -92,15 +92,14 @@ population. We can also resample from this multiple times and do a
 bootstap (a simulation) to make this inference.
 
 ``` r
-avg<-c(NA)
-for (i in 1:1000){
-x <- sample(ncbirths_white$weight, size = 50, replace = TRUE)
-avg[i]<-mean(x)
-}
-df_weight <- data.frame(avg = avg)
-df_weight <- df_weight %>% mutate(avg =(avg + (7.43-mean(ncbirths_white$weight))))
+boot_df_weight <- ncbirths_white %>%
+  specify(response = weight) %>% 
+  generate(reps = 1000, type = "bootstrap") %>% 
+  calculate(stat = "mean")
 
-df_weight %>% ggplot(aes(x = avg)) +
+boot_df_weight <- boot_df_weight %>% mutate(stat = (stat + (7.43-mean(ncbirths_white$weight))))
+
+boot_df_weight %>% ggplot(aes(x = stat)) +
   geom_histogram(color = "black",fill = "blue", alpha = 0.4) +
   xlab("weight")
 ```
@@ -110,22 +109,20 @@ df_weight %>% ggplot(aes(x = avg)) +
 ![](lab-11_files/figure-gfm/bootstrap-1.png)<!-- -->
 
 ``` r
-sum((df_weight$avg <= (mean(ncbirths_white$weight))) / length(df_weight$avg)) +
-sum((df_weight$avg >= (7.43+(7.43-mean(ncbirths_white$weight)))) / length(df_weight$avg))
+sum((boot_df_weight$stat <= (mean(ncbirths_white$weight))) / length(boot_df_weight$stat)) +
+sum((boot_df_weight$stat >= (7.43+(7.43-mean(ncbirths_white$weight)))) / length(boot_df_weight$stat))
 ```
 
-    ## [1] 0.37
+    ## [1] 0
 
 ### Exercise 4
 
-For a two-tailed test we would get a p-value of 0.37. This is given by
-that the probability of getting a difference between the null and
-observed value in the negative direction is .183 and the probability of
-getting a difference between the null and observed value in the positive
-direction is .187.
+For a two-tailed test we would get a p-value of 0. In other words, there
+are 0 instances of having a sample mean that is at least as extreme as
+the observed sample mean.
 
-This p-value indicates that there has not been a significant change in
-the average birth weight of Caucasian babies since 1995.
+This p-value indicates that there has been a significant change in the
+average birth weight of Caucasian babies since 1995.
 
 ### Exercise 5
 
@@ -166,3 +163,38 @@ Yes. We do not know the true population difference in birth weight of
 babies’ mothers who smoked and didn’t smoke. We do have a sample
 however, and can make an *inference* as to whether a difference exists
 in the population.
+
+### Exercise 9
+
+``` r
+#smoker
+boot_df_smoker <- ncbirths_habitgiven %>% 
+  filter(habit == "smoker") %>%
+  specify(response = weight) %>% 
+  generate(reps = 1000, type = "bootstrap") %>% 
+  calculate(stat = "mean")
+
+#nonsmoker
+boot_df_nonsmoker <- ncbirths_habitgiven %>% 
+  filter(habit == "nonsmoker") %>%
+  specify(response = weight) %>% 
+  generate(reps = 1000, type = "bootstrap") %>% 
+  calculate(stat = "mean")
+
+boot_df_diff <- (boot_df_nonsmoker$stat-boot_df_smoker$stat) %>% 
+  as.data.frame() %>% 
+  setNames("MeanDiff")
+
+boot_df_diff_c <- (boot_df_diff$MeanDiff - mean(boot_df_diff$MeanDiff)) %>% 
+  as.data.frame() %>% 
+  setNames("MeanDiff")
+
+sum((boot_df_diff_c$MeanDiff >= mean(boot_df_diff$MeanDiff))/length(boot_df_diff_c$MeanDiff)) +
+sum((boot_df_diff_c$MeanDiff <= (mean(boot_df_diff$MeanDiff)*-1))/length(boot_df_diff_c$MeanDiff))
+```
+
+    ## [1] 0.019
+
+The p-value is 0.021. There is evidence to show that there is a
+difference in birth weight of babies whose mothers smokes versus don’t
+smoke.
