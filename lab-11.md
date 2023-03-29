@@ -209,3 +209,30 @@ boot_df_diff_c %>%
 
     ##        lower     upper
     ## 1 -0.2859503 0.3235019
+
+### Exercise 11
+
+``` r
+ncbirths %>% filter(mature == "mature mom") %>% 
+  filter(mage == min(mage)) %>% 
+  select(mage, mature)
+```
+
+    ## # A tibble: 35 × 2
+    ##     mage mature    
+    ##    <int> <fct>     
+    ##  1    35 mature mom
+    ##  2    35 mature mom
+    ##  3    35 mature mom
+    ##  4    35 mature mom
+    ##  5    35 mature mom
+    ##  6    35 mature mom
+    ##  7    35 mature mom
+    ##  8    35 mature mom
+    ##  9    35 mature mom
+    ## 10    35 mature mom
+    ## # … with 25 more rows
+
+The cut off is 35. Once you hit 35 you are labeled a mature mom.
+According to the data set the minimum age to qualify to be a mature mom
+is 35.

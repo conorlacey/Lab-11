@@ -134,4 +134,13 @@ boot_df_diff_c %>%
 
 ```
 
+### Exercise 11
 
+
+```{r maturemom}
+ncbirths %>% filter(mature == "mature mom") %>% 
+  filter(mage == min(mage)) %>% 
+  select(mage, mature)
+```
+
+The cut off is 35. Once you hit 35 you are labeled a mature mom. According to the data set the minimum age to qualify to be a mature mom is 35.
