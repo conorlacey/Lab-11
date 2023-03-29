@@ -144,3 +144,58 @@ ncbirths %>% filter(mature == "mature mom") %>%
 ```
 
 The cut off is 35. Once you hit 35 you are labeled a mature mom. According to the data set the minimum age to qualify to be a mature mom is 35.
+
+### Exercise 12 
+
+lo_mature = proportion of low birth weight babies of mature mothers
+
+lo_young = proportion of low birth weight babies of young mothers
+
+H0: lo_mature = lo_young
+
+H1: lo_mature > lo_young
+
+We will run an inference test. We don't know how the proportions of low birth weight babies compare between young and mature mothers in the population, but we can *infer* this from the sample we have. 
+
+```{r low birth weight hypothesis test}
+#data sets
+df_lo_mature <- ncbirths %>% filter(mature == "mature mom")
+df_lo_young <- ncbirths %>% filter(mature == "younger mom") 
+
+#Observed value
+lo_mature <- sum((df_lo_mature$lowbirthweight == "low")/(nrow(df_lo_mature)))
+lo_young <- sum((df_lo_young$lowbirthweight == "low")/(nrow(df_lo_young)))
+obs <- lo_mature - lo_young
+
+#Bootstrap 
+boot_mat <- df_lo_mature %>% 
+  specify(response = lowbirthweight, success = "low") %>% 
+  generate(reps = 1000, type = "bootstrap") %>% 
+  calculate(stat = "prop")
+
+boot_yug <- df_lo_young %>% 
+  specify(response = lowbirthweight, success = "low") %>% 
+  generate(reps = 1000, type = "bootstrap") %>%
+  calculate(stat = "prop")
+
+prop_diff <- (boot_mat$stat - boot_yug$stat) %>% as.data.frame() %>% 
+  setNames("stat")
+
+#Run Test 
+prop_diff_c <- (prop_diff$stat - mean(prop_diff$stat)) %>% as.data.frame() %>% #re-center at null
+  setNames("stat")
+
+sum((prop_diff_c$stat >= obs)/(nrow(prop_diff_c)))
+```
+
+The p-value is 0.184. Based on this, we do not have any evidence that there is a difference in proportions of low birth weight babies between mature and young mothers. 
+
+### Exercise 13
+
+```{r confidence interval low birth weight}
+prop_diff %>%
+  summarise(lower = quantile(stat, 0.025),
+            upper = quantile(stat, 0.975))
+```
+
+We can be 95% confident that the true population difference in proportions of low birth weight babies between mature and young mothers is between -0.03 and 0.09. 
