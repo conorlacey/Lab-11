@@ -195,6 +195,17 @@ sum((boot_df_diff_c$MeanDiff <= (mean(boot_df_diff$MeanDiff)*-1))/length(boot_df
 
     ## [1] 0.019
 
-The p-value is 0.021. There is evidence to show that there is a
+The p-value is 0.019. There is evidence to show that there is a
 difference in birth weight of babies whose mothers smokes versus don’t
 smoke.
+
+### Exercise 10
+
+``` r
+boot_df_diff_c %>%
+  summarise(lower = quantile(MeanDiff, 0.025),
+            upper = quantile(MeanDiff, 0.975))
+```
+
+    ##        lower     upper
+    ## 1 -0.2859503 0.3235019

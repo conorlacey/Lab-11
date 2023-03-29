@@ -96,7 +96,7 @@ Yes. We do not know the true population difference in birth weight of babies' mo
 
 ### Exercise 9
 
-```{r hypothesis test}
+```{r boot smoker & non_smoker}
 #smoker
 boot_df_smoker <- ncbirths_habitgiven %>% 
   filter(habit == "smoker") %>%
@@ -123,5 +123,15 @@ sum((boot_df_diff_c$MeanDiff >= mean(boot_df_diff$MeanDiff))/length(boot_df_diff
 sum((boot_df_diff_c$MeanDiff <= (mean(boot_df_diff$MeanDiff)*-1))/length(boot_df_diff_c$MeanDiff))
 ```
 
-The p-value is 0.021. There is evidence to show that there is a difference in birth weight of babies whose mothers smokes versus don't smoke. 
+The p-value is 0.019. There is evidence to show that there is a difference in birth weight of babies whose mothers smokes versus don't smoke. 
+
+### Exercise 10
+
+```{r confidence interval}
+boot_df_diff_c %>%
+  summarise(lower = quantile(MeanDiff, 0.025),
+            upper = quantile(MeanDiff, 0.975))
+
+```
+
 
